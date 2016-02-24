@@ -8,17 +8,18 @@ import org.apache.spark.util.collection.BitSet
 
 import scala.util.Random
 
-/**
- * Find the k nearest neighbors from a dataset for every other object in the
- * same dataset. Implementations may be either exact or approximate.
- *
- * @param matrix a row oriented matrix. Each row in the matrix represents
- *               a record in the dataset. Records are identified by their
- *               matrix index.
- * @return a similarity matrix with MatrixEntry(index_a, index_b, similarity).
- *
- */
+
 trait Joiner {
+  /**
+    * Find the k nearest neighbors from a dataset for every other object in the
+    * same dataset. Implementations may be either exact or approximate.
+    *
+    * @param matrix a row oriented matrix. Each row in the matrix represents
+    *               a record in the dataset. Records are identified by their
+    *               matrix index.
+    * @return a similarity matrix with MatrixEntry(index_a, index_b, similarity).
+    *
+    */
   def join(matrix: IndexedRowMatrix): CoordinateMatrix
 }
 
@@ -230,7 +231,7 @@ object Lsh {
   final case class Signature(index: Long, vector: Vector, bitSet: BitSet) extends Ordered[Signature] {
     def compare(that: Signature): Int = bitSetComparator(this.bitSet, that.bitSet)
 
-    override def toString(): String = {
+    override def toString: String = {
       val bs = bitSet
       var str = s"$index -> ["
       for (i <- bs.iterator) {

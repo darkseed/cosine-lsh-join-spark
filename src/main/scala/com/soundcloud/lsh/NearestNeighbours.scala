@@ -13,7 +13,7 @@ import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, IndexedRow, 
  *
  */
 class NearestNeighbours(
-  distance: VectorDisctance,
+  distance: VectorDistance,
   threshold: Double,
   fraction: Double = 0.1) extends Joiner with Serializable {
 
@@ -25,19 +25,19 @@ class NearestNeighbours(
     val joined = sampledRows.cartesian(rows)
 
     val similarity = joined.map {
-      case ((rowA: IndexedRow), (rowB: IndexedRow)) =>
+      case ((rowA: IndexedRow), (rowB: IndexedRow)) ⇒
         ((rowA.index, rowB.index), distance(rowA.vector, rowB.vector))
     }
 
     val neighbours = similarity.filter {
-      case ((indexA: Long, indexB: Long), similarity) =>
-        similarity >= threshold &&
+      case ((indexA: Long, indexB: Long), similarity_distance) ⇒
+        similarity_distance >= threshold &&
           indexA < indexB // make upper triangular and remove self similarities
     }
 
     val resultRows = neighbours.map {
-      case ((indexA: Long, indexB: Long), similarity) =>
-        MatrixEntry(indexA, indexB, similarity)
+      case ((indexA: Long, indexB: Long), similarity_distance) ⇒
+        MatrixEntry(indexA, indexB, similarity_distance)
     }
 
     new CoordinateMatrix(resultRows)
