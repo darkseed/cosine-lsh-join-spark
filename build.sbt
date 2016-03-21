@@ -2,9 +2,9 @@ organization := "com.soundcloud"
 
 name := "cosine-lsh-join-spark"
 
-version := "0.0.3"
+version := "0.0.4"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.10.6"
 
 // do not run multiple SparkContext's in local mode in parallel
 parallelExecution in Test := false
@@ -12,7 +12,8 @@ parallelExecution in Test := false
 // main dependencies
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "1.4.1" % "provided",
-  "org.apache.spark" %% "spark-mllib" % "1.4.1" % "provided"
+  "org.apache.spark" %% "spark-mllib" % "1.4.1" % "provided",
+  "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly()
 )
 
 // test dependencies

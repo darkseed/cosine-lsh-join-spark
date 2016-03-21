@@ -13,9 +13,9 @@ import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, IndexedRow, 
  *
  */
 class NearestNeighbours(
-  distance: VectorDisctance,
-  threshold: Double,
-  fraction: Double = 0.1) extends Joiner with Serializable {
+                         distance: VectorDistance,
+                         threshold: Double,
+                         fraction: Double = 0.1) extends Joiner with Serializable {
 
   def join(inputMatrix: IndexedRowMatrix): CoordinateMatrix = {
     val rows = inputMatrix.rows
